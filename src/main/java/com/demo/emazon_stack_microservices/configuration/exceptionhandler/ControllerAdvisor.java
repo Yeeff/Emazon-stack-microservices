@@ -4,6 +4,7 @@ import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.exception.E
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.exception.NoDataFoundException;
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.exception.CategoryAlreadyExistsException;
 import com.demo.emazon_stack_microservices.configuration.Constants;
+import com.demo.emazon_stack_microservices.domain.exception.CategoryNonUniqueNameException;
 import com.demo.emazon_stack_microservices.domain.exception.EmptyFieldException;
 import com.demo.emazon_stack_microservices.domain.exception.CharactersLongerThanExpectedException;
 import lombok.RequiredArgsConstructor;
@@ -27,12 +28,24 @@ public class ControllerAdvisor {
     }
 
     @ExceptionHandler(CharactersLongerThanExpectedException.class)
-    public ResponseEntity<ExceptionResponse> handleMoreThan59CharactersException(CharactersLongerThanExpectedException exception) {
+    public ResponseEntity<ExceptionResponse> handleCharactersLongerThanExpectedCharactersException(CharactersLongerThanExpectedException exception) {
         List<String> provisonalList = List.of(exception.getMessage().split(","));
         return ResponseEntity.badRequest().body(new ExceptionResponse(
                 String.format(Constants.CHARACTERS_LONGER_THAN_EXPECTED_EXCEPTION_MESSAGE, provisonalList.get(0), provisonalList.get(1)),
                 HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now()));
     }
+
+    @ExceptionHandler(CategoryNonUniqueNameException.class)
+    public ResponseEntity<ExceptionResponse> handleCategoryNonUniqueNameException(CategoryNonUniqueNameException exception) {
+        return ResponseEntity.badRequest().body(new ExceptionResponse(
+                exception.getMessage(),
+                HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now()));
+    }
+
+
+
+
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ExceptionResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
@@ -50,6 +63,10 @@ public class ControllerAdvisor {
         return ResponseEntity.badRequest().body(new ExceptionResponse(errorMessage,
                 HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now()));
     }
+
+
+
+
 
     @ExceptionHandler(CategoryAlreadyExistsException.class)
     public ResponseEntity<ExceptionResponse> handleCategoryAlreadyExistsException() {

@@ -19,7 +19,7 @@ public class CategoryAdapter implements ICategoryPersistencePort {
     private final ICategoryEntityMapper categoryEntityMapper;
 
     @Override
-    public void addSupplier(Category category) {
+    public void addCategory(Category category) {
         if (categoryRepository.findByName(category.getName()).isPresent()) {
             throw new CategoryAlreadyExistsException();
         }
@@ -34,5 +34,10 @@ public class CategoryAdapter implements ICategoryPersistencePort {
             throw new NoDataFoundException();
         }
         return categoryEntityMapper.toModelList(categories);
+    }
+
+    @Override
+    public Boolean existsByName(String name) {
+        return categoryRepository.existsByName(name);
     }
 }

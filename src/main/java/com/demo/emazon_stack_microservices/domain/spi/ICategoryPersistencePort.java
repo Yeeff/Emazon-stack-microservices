@@ -5,6 +5,7 @@ import com.pragma.arquetipobootcamp2024.domain.model.Category;
 import java.util.List;
 
 public interface ICategoryPersistencePort {
-    void addSupplier(Category category);
+    void addCategory(Category category);
     List<Category> getAllCategories();
+    Boolean existsByName(String name);
 }
