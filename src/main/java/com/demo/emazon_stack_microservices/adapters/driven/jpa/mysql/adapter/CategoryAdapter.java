@@ -8,7 +8,11 @@ import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.mapper.ICat
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.repository.ICategoryRepository;
 import com.demo.emazon_stack_microservices.domain.model.Category;
 import com.demo.emazon_stack_microservices.domain.spi.ICategoryPersistencePort;
+import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.utils.PageableValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 
 import java.util.List;
@@ -27,9 +31,16 @@ public class CategoryAdapter implements ICategoryPersistencePort {
     }
 
     @Override
-    public List<Category> getAllCategories() {
+    public List<Category> getAllCategories(Integer size, Integer page, String sortDirection) {
 
-        List<CategoryEntity> categories = categoryRepository.findAll();
+        PageableValidator.validatePageableParameters(size,page,sortDirection);
+
+        Pageable pageable = PageRequest.of(
+                page,
+                size,
+                Sort.by(Sort.Direction.fromString(sortDirection), "name"));
+
+        List<CategoryEntity> categories = categoryRepository.findAll(pageable).getContent();
         if (categories.isEmpty()) {
             throw new NoDataFoundException();
         }

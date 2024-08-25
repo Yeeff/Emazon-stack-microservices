@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ICategoryServicePort {
     void addCategory(Category category);
-    List<Category> getAllCategories();
+    List<Category> getAllCategories(Integer size, Integer page, String sortDirection);
 }

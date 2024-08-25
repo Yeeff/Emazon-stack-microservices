@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface ICategoryPersistencePort {
     void addCategory(Category category);
-    List<Category> getAllCategories();
+    List<Category> getAllCategories(Integer size, Integer page, String sortDirection);
     Boolean existsByName(String name);
 }

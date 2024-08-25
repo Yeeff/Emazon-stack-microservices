@@ -10,4 +10,10 @@ public class Constants {
     public static final String CATEGORY_ALREADY_EXISTS_EXCEPTION_MESSAGE = "The category you want to create already exists";
     public static final String EMPTY_FIELD_EXCEPTION_MESSAGE = "Field %s can not be empty";
     public static final String CHARACTERS_LONGER_THAN_EXPECTED_EXCEPTION_MESSAGE = "Field %s can not be longer than %s";
+    public static final String INVALID_SORT_DIRECTION_EXCEPTION_MESSAGE = "Sort direction must be one of this -> %s ";
+    public static final String INVALID_SIZE_EXCEPTION_MESSAGE = "Page size cannot be less than %s";
+    public static final String INVALID_PAGE_EXCEPTION_MESSAGE = "Page number cannot be less than %s";
+
+
+
 }

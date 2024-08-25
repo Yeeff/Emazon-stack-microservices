@@ -57,13 +57,13 @@ class CategoryUseCaseTest {
                 new Category(1L, "Electronics", "All electronic items")
         );
 
-        when(categoryPersistencePort.getAllCategories()).thenReturn(categories);
+        when(categoryPersistencePort.getAllCategories(10,1,"Asc")).thenReturn(categories);
 
-        List<Category> result = categoryUseCase.getAllCategories();
+        List<Category> result = categoryUseCase.getAllCategories(10,1,"Asc");
 
         assertEquals(1, result.size());
         assertEquals("Electronics", result.get(0).getName());
-        verify(categoryPersistencePort, times(1)).getAllCategories();
+        verify(categoryPersistencePort, times(1)).getAllCategories(10,1,"Asc");
     }
 
 }
