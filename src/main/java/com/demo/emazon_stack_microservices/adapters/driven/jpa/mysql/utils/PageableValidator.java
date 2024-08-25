@@ -1,6 +1,7 @@
 package com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.utils;
 
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.exception.InvalidSortDirectionException;
+import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.exception.NullParameterPaginationException;
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.exception.PageNumberOutOfRangeException;
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.exception.PageSizeOutOfRangeException;
 import org.springframework.data.domain.Sort;
@@ -10,11 +11,25 @@ public class PageableValidator {
     private static final int MIN_PAGE_NUMBER = 0;
     private static final String ALLOWED_VALUES = "[ASC, DESC]";
 
+    private enum parametersName { SIZE, PAGE, SORT_DIRECTION }
+
+
     private PageableValidator() {
         throw new IllegalStateException("Utility class");
     }
 
-    public static void validatePageableParameters(int size, int page, String sortDirection) {
+    public static void validatePageableParameters(Integer size, Integer page, String sortDirection) {
+
+        if (size == null) {
+            throw new NullParameterPaginationException(parametersName.SIZE.toString());
+        }
+        if (page == null) {
+            throw new NullParameterPaginationException(parametersName.PAGE.toString());
+        }
+        if (sortDirection == null) {
+            throw new NullParameterPaginationException(parametersName.SORT_DIRECTION.toString());
+        }
+
         validatePage(page);
         validateSize(size);
         validateSortDirection(sortDirection);

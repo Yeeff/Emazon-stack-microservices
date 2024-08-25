@@ -13,7 +13,7 @@ public class Constants {
     public static final String INVALID_SORT_DIRECTION_EXCEPTION_MESSAGE = "Sort direction must be one of this -> %s ";
     public static final String INVALID_SIZE_EXCEPTION_MESSAGE = "Page size cannot be less than %s";
     public static final String INVALID_PAGE_EXCEPTION_MESSAGE = "Page number cannot be less than %s";
-
+    public static final String NULL_PAGINATION_PARAMETER_EXCEPTION_MESSAGE = "Parameter %s cannot be null.";
 
 
 }
