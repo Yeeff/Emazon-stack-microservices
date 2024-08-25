@@ -12,6 +12,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Collections;
 import java.util.List;
 
+import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -64,6 +65,29 @@ class CategoryUseCaseTest {
         assertEquals(1, result.size());
         assertEquals("Electronics", result.get(0).getName());
         verify(categoryPersistencePort, times(1)).getAllCategories(10,1,"Asc");
+    }
+
+    @Test
+    void testGetAllCategoriesWithValidPaginationParameters() {
+
+        Integer size = 5;
+        Integer page = 0;
+        String sortDirection = "ASC";
+
+        List<Category> expectedCategories = List.of(
+                new Category(1L, "Category1", "Description1"),
+                new Category(2L, "Category2", "Description2")
+        );
+
+        when(categoryPersistencePort.getAllCategories(size, page, sortDirection)).thenReturn(expectedCategories);
+
+        List<Category> actualCategories = categoryUseCase.getAllCategories(size, page, sortDirection);
+
+        assertNotNull(actualCategories, "The returned category list should not be null.");
+        assertEquals(expectedCategories.size(), actualCategories.size(), "The size of the returned category list should match the expected size.");
+        assertEquals(expectedCategories, actualCategories, "The returned category list should match the expected categories.");
+
+        verify(categoryPersistencePort, times(1)).getAllCategories(size, page, sortDirection);
     }
 
 }

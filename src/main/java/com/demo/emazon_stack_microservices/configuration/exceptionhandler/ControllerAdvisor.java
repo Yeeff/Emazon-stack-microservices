@@ -56,6 +56,12 @@ public class ControllerAdvisor {
                 String.format(Constants.INVALID_SIZE_EXCEPTION_MESSAGE, exception.getMessage()),
                 HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now()));
     }
+    @ExceptionHandler(NullParameterPaginationException.class)
+    public ResponseEntity<ExceptionResponse> handleNullParameterPaginationException(NullParameterPaginationException exception) {
+        return ResponseEntity.badRequest().body(new ExceptionResponse(
+                String.format(Constants.NULL_PAGINATION_PARAMETER_EXCEPTION_MESSAGE, exception.getMessage()),
+                HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now()));
+    }
 
 
 
