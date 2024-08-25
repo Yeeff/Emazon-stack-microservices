@@ -1,5 +1,4 @@
-package com.pragma.arquetipobootcamp2024.domain.model;
-
+package com.demo.emazon_stack_microservices.domain.model;
 
 
 import com.demo.emazon_stack_microservices.domain.exception.CharactersLongerThanExpectedException;

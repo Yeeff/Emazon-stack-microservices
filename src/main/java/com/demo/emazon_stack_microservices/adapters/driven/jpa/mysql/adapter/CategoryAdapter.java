@@ -6,8 +6,8 @@ import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.exception.C
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.exception.NoDataFoundException;
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.mapper.ICategoryEntityMapper;
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.repository.ICategoryRepository;
+import com.demo.emazon_stack_microservices.domain.model.Category;
 import com.demo.emazon_stack_microservices.domain.spi.ICategoryPersistencePort;
-import com.pragma.arquetipobootcamp2024.domain.model.Category;
 import lombok.RequiredArgsConstructor;
 
 

@@ -1,6 +1,7 @@
 package com.demo.emazon_stack_microservices.domain.spi;
 
-import com.pragma.arquetipobootcamp2024.domain.model.Category;
+
+import com.demo.emazon_stack_microservices.domain.model.Category;
 
 import java.util.List;
 
