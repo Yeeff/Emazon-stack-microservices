@@ -30,9 +30,12 @@ public class BrandRestControllerAdapter {
 
     @GetMapping("/")
     public ResponseEntity<List<BrandResponse>> getBrands(
+            @RequestParam int page,
+            @RequestParam int size,
+            @RequestParam String sortDirection
     ) {
         return ResponseEntity.ok(brandResponseMapper.toBrandResponseList(
-                brandServicePort.getAllBrands()
+                brandServicePort.getAllBrands(size,page,sortDirection)
         ));
     }
 }

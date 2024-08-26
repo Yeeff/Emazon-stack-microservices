@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface IBrandPersistencePort {
     void addBrand(Brand brand);
-    List<Brand> getAllBrands();
+    List<Brand> getAllBrands(Integer size, Integer page, String sortDirection);
     Boolean existsByName(String name);
 }
