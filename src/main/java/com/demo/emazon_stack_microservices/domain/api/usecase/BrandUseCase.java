@@ -28,8 +28,8 @@ public class BrandUseCase implements IBrandServicePort {
     }
 
     @Override
-    public List<Brand> getAllBrands() {
+    public List<Brand> getAllBrands(Integer size, Integer page, String sortDirection) {
 
-        return brandPersistencePort.getAllBrands();
+        return brandPersistencePort.getAllBrands(size,page,sortDirection);
     }
 }

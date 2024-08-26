@@ -18,6 +18,7 @@ import java.util.List;
 @RequestMapping("/category")
 @RequiredArgsConstructor
 public class CategoryRestControllerAdapter {
+
     private final ICategoryServicePort categoryServicePort;
     private final ICategoryRequestMapper categoryRequestMapper;
     private final ICategoryResponseMapper categoryResponseMapper;
