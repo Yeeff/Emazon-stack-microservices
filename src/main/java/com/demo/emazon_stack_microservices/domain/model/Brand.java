@@ -7,23 +7,23 @@ import com.demo.emazon_stack_microservices.domain.util.DomainConstants;
 
 import java.util.Objects;
 
-public class Category {
+public class Brand {
     private final Long id;
     private final String  name;
     private final String description;
 
-    public Category(Long id, String name, String description) {
+    public Brand(Long id, String name, String description) {
         if (name.trim().isEmpty()) {
             throw new EmptyFieldException(DomainConstants.Field.NAME.toString());
         }
         if (description.trim().isEmpty()) {
             throw new EmptyFieldException(DomainConstants.Field.DESCRIPTION.toString());
         }
-        if (name.length() > DomainConstants.MAX_CATEGORY_NAME_LENGTH) {
-            throw new CharactersLongerThanExpectedException(DomainConstants.Field.NAME.toString() +","+ DomainConstants.MAX_CATEGORY_NAME_LENGTH);
+        if (name.length() > DomainConstants.MAX_BRAND_NAME_LENGTH) {
+            throw new CharactersLongerThanExpectedException(DomainConstants.Field.NAME.toString() +","+ DomainConstants.MAX_BRAND_NAME_LENGTH);
         }
-        if (description.length() > DomainConstants.MAX_CATEGORY_DESCRIPTION_LENGTH) {
-            throw new CharactersLongerThanExpectedException(DomainConstants.Field.DESCRIPTION.toString() +","+ DomainConstants.MAX_CATEGORY_DESCRIPTION_LENGTH);
+        if (description.length() > DomainConstants.MAX_BRAND_DESCRIPTION_LENGTH) {
+            throw new CharactersLongerThanExpectedException(DomainConstants.Field.DESCRIPTION.toString() +","+ DomainConstants.MAX_BRAND_DESCRIPTION_LENGTH);
         }
         this.id = id;
         this.name = Objects.requireNonNull(name, DomainConstants.FIELD_NAME_NULL_MESSAGE);

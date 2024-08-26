@@ -34,7 +34,7 @@ class CategoryTest {
 
     @Test
     void shouldThrowExceptionWhenNameIsTooLong() {
-        String longName = "A".repeat(DomainConstants.MAX_NAME_LENGTH + 1);
+        String longName = "A".repeat(DomainConstants.MAX_CATEGORY_NAME_LENGTH + 1);
 
         assertThrows(CharactersLongerThanExpectedException.class, () ->
                         new Category(VALID_ID, longName, VALID_DESCRIPTION),
@@ -44,7 +44,7 @@ class CategoryTest {
 
     @Test
     void shouldThrowExceptionWhenDescriptionIsTooLong() {
-        String longDescription = "A".repeat(DomainConstants.MAX_DESCRIPTION_LENGTH + 1);
+        String longDescription = "A".repeat(DomainConstants.MAX_CATEGORY_DESCRIPTION_LENGTH + 1);
 
         assertThrows(CharactersLongerThanExpectedException.class, () ->
                         new Category(VALID_ID, VALID_NAME, longDescription),
