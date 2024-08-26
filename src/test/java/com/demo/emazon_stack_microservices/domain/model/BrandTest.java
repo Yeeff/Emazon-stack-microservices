@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CategoryTest {
+class BrandTest {
     private static final Long VALID_ID = 1L;
     private static final String VALID_NAME = "Valid Name";
     private static final String VALID_DESCRIPTION = "Valid Description";
@@ -17,7 +17,7 @@ class CategoryTest {
         String emptyName = "";
 
         assertThrows(EmptyFieldException.class, () ->
-                        new Category(VALID_ID, emptyName, VALID_DESCRIPTION),
+                        new Brand(VALID_ID, emptyName, VALID_DESCRIPTION),
                 "Expected constructor to throw an exception when name is empty"
         );
     }
@@ -27,27 +27,27 @@ class CategoryTest {
         String emptyDescription = "";
 
         assertThrows(EmptyFieldException.class, () ->
-                        new Category(VALID_ID, VALID_NAME, emptyDescription),
+                        new Brand(VALID_ID, VALID_NAME, emptyDescription),
                 "Expected constructor to throw an exception when description is empty"
         );
     }
 
     @Test
     void shouldThrowExceptionWhenNameIsTooLong() {
-        String longName = "A".repeat(DomainConstants.MAX_CATEGORY_NAME_LENGTH + 1);
+        String longName = "A".repeat(DomainConstants.MAX_BRAND_NAME_LENGTH + 1);
 
         assertThrows(CharactersLongerThanExpectedException.class, () ->
-                        new Category(VALID_ID, longName, VALID_DESCRIPTION),
+                        new Brand(VALID_ID, longName, VALID_DESCRIPTION),
                 "Expected constructor to throw an exception when name is too long"
         );
     }
 
     @Test
     void shouldThrowExceptionWhenDescriptionIsTooLong() {
-        String longDescription = "A".repeat(DomainConstants.MAX_CATEGORY_DESCRIPTION_LENGTH + 1);
+        String longDescription = "A".repeat(DomainConstants.MAX_BRAND_DESCRIPTION_LENGTH + 1);
 
         assertThrows(CharactersLongerThanExpectedException.class, () ->
-                        new Category(VALID_ID, VALID_NAME, longDescription),
+                        new Brand(VALID_ID, VALID_NAME, longDescription),
                 "Expected constructor to throw an exception when description is too long"
         );
     }
@@ -55,7 +55,7 @@ class CategoryTest {
     @Test
     void shouldCreateCategoryWithValidValues() {
         assertDoesNotThrow(() ->
-                        new Category(VALID_ID, VALID_NAME, VALID_DESCRIPTION),
+                        new Brand(VALID_ID, VALID_NAME, VALID_DESCRIPTION),
                 "Expected constructor to succeed when valid values are provided"
         );
     }
@@ -63,7 +63,7 @@ class CategoryTest {
     @Test
     void shouldNotAllowNullName() {
         assertThrows(NullPointerException.class, () ->
-                        new Category(VALID_ID, null, VALID_DESCRIPTION),
+                        new Brand(VALID_ID, null, VALID_DESCRIPTION),
                 "Expected constructor to throw NullPointerException when name is null"
         );
     }
@@ -75,4 +75,5 @@ class CategoryTest {
                 "Expected constructor to throw NullPointerException when description is null"
         );
     }
+
 }

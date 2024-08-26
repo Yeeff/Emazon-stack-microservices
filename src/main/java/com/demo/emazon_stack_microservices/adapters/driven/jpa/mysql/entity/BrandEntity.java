@@ -13,16 +13,16 @@ import lombok.Setter;
 @Setter
 
 @Entity
-@Table(name = "category",
-        uniqueConstraints = {@UniqueConstraint(columnNames = "name", name = "UK_category_name")})
-public class CategoryEntity {
+@Table(name = "brand",
+        uniqueConstraints = {@UniqueConstraint(columnNames = "name", name = "UK_brand_name")})
+public class BrandEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false, length = DomainConstants.MAX_CATEGORY_NAME_LENGTH)
+    @Column(name = "name", nullable = false, length = DomainConstants.MAX_BRAND_NAME_LENGTH)
     private String  name;
 
-    @Column(name = "description", nullable = false, length = DomainConstants.MAX_CATEGORY_DESCRIPTION_LENGTH)
+    @Column(name = "description", nullable = false, length = DomainConstants.MAX_BRAND_DESCRIPTION_LENGTH)
     private String description;
 }
