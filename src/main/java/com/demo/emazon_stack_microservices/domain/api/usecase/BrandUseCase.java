@@ -21,7 +21,7 @@ public class BrandUseCase implements IBrandServicePort {
         Boolean exists = brandPersistencePort.existsByName(brand.getName());
 
         if (Boolean.TRUE.equals(exists)) {
-            throw new BrandNonUniqueNameException(DomainConstants.BRAND_NAME_MUST_BE_UNIQUE);
+            throw new BrandNonUniqueNameException(DomainConstants.BRAND_NAME_MUST_BE_UNIQUE_MESSAGE);
         } else {
             brandPersistencePort.addBrand(brand);
         }

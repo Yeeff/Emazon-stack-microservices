@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -25,4 +28,7 @@ public class CategoryEntity {
 
     @Column(name = "description", nullable = false, length = DomainConstants.MAX_CATEGORY_DESCRIPTION_LENGTH)
     private String description;
+
+    @ManyToMany(mappedBy = "categories")
+    private Set<ArticleEntity> articles = new HashSet<>();
 }

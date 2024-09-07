@@ -4,9 +4,11 @@ import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.exception.I
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.exception.NullParameterPaginationException;
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.exception.PageNumberOutOfRangeException;
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.exception.PageSizeOutOfRangeException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-public class PageableValidator {
+public class PageableUtils {
     private static final int MIN_PAGE_SIZE = 1;
     private static final int MIN_PAGE_NUMBER = 0;
     private static final String ALLOWED_VALUES = "[ASC, DESC]";
@@ -14,7 +16,7 @@ public class PageableValidator {
     private enum parametersName { SIZE, PAGE, SORT_DIRECTION }
 
 
-    private PageableValidator() {
+    private PageableUtils() {
         throw new IllegalStateException("Utility class");
     }
 
@@ -33,6 +35,13 @@ public class PageableValidator {
         validatePage(page);
         validateSize(size);
         validateSortDirection(sortDirection);
+    }
+
+    public static Pageable getPageable(Integer size, Integer page, String sortDirection){
+        return PageRequest.of(
+                page,
+                size,
+                Sort.by(Sort.Direction.fromString(sortDirection), "name"));
     }
 
     private static void validatePage(int page) {

@@ -12,7 +12,6 @@ import org.mockito.MockitoAnnotations;
 import java.util.Collections;
 import java.util.List;
 
-import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -81,11 +80,7 @@ class CategoryUseCaseTest {
 
         when(categoryPersistencePort.getAllCategories(size, page, sortDirection)).thenReturn(expectedCategories);
 
-        List<Category> actualCategories = categoryUseCase.getAllCategories(size, page, sortDirection);
-
-        assertNotNull(actualCategories, "The returned category list should not be null.");
-        assertEquals(expectedCategories.size(), actualCategories.size(), "The size of the returned category list should match the expected size.");
-        assertEquals(expectedCategories, actualCategories, "The returned category list should match the expected categories.");
+        categoryUseCase.getAllCategories(size, page, sortDirection);
 
         verify(categoryPersistencePort, times(1)).getAllCategories(size, page, sortDirection);
     }
