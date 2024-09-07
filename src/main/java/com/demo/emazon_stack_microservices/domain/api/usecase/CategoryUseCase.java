@@ -21,7 +21,7 @@ public class CategoryUseCase implements ICategoryServicePort {
         Boolean exists = categoryPersistencePort.existsByName(category.getName());
 
         if (Boolean.TRUE.equals(exists)) {
-            throw new CategoryNonUniqueNameException(DomainConstants.CATEGORY_NAME_MUST_BE_UNIQUE);
+            throw new CategoryNonUniqueNameException(DomainConstants.CATEGORY_NAME_MUST_BE_UNIQUE_MESSAGE);
         } else {
             categoryPersistencePort.addCategory(category);
         }

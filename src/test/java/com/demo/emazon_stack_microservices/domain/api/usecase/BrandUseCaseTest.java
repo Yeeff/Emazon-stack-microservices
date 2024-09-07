@@ -26,15 +26,20 @@ class BrandUseCaseTest {
     @InjectMocks
     private BrandUseCase brandUseCase;
 
+    Brand brand;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+
+        brand = new Brand(1L, "LG", "All electronic Brands");
+
+
     }
 
     @Test
     void testAddCategory_whenCategoryNameExists_throwsException() {
 
-        Brand brand = new Brand(1L, "LG", "All electronic Brands");
         when(brandPersistencePort.existsByName(anyString())).thenReturn(true);
 
         assertThrows(BrandNonUniqueNameException.class, () -> brandUseCase.addBrand(brand));
@@ -44,7 +49,6 @@ class BrandUseCaseTest {
 
     @Test
     void testAddCategory_whenCategoryNameDoesNotExist_addsCategory() {
-        Brand brand = new Brand(1L, "LG", "All electronic Brands");
         when(brandPersistencePort.existsByName(anyString())).thenReturn(false);
 
         brandUseCase.addBrand(brand);

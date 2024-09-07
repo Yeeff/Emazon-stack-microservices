@@ -5,13 +5,11 @@ import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.exception.B
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.exception.NoDataFoundException;
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.mapper.IBrandEntityMapper;
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.repository.IBrandRepository;
-import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.utils.PageableValidator;
+import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.utils.PageableUtils;
 import com.demo.emazon_stack_microservices.domain.model.Brand;
 import com.demo.emazon_stack_microservices.domain.spi.IBrandPersistencePort;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -32,17 +30,15 @@ public class BrandAdapter implements IBrandPersistencePort {
     @Override
     public List<Brand> getAllBrands(Integer size, Integer page, String sortDirection) {
 
-        PageableValidator.validatePageableParameters(size,page,sortDirection);
+        PageableUtils.validatePageableParameters(size,page,sortDirection);
 
-        Pageable pageable = PageRequest.of(
-                page,
-                size,
-                Sort.by(Sort.Direction.fromString(sortDirection), "name"));
+        Pageable pageable = PageableUtils.getPageable(size,page,sortDirection);
 
         List<BrandEntity> brands = brandRepository.findAll(pageable).getContent();
         if (brands.isEmpty()) {
             throw new NoDataFoundException();
         }
+
         return brandEntityMapper.toModelList(brands);
     }
 

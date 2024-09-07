@@ -1,15 +1,21 @@
 package com.demo.emazon_stack_microservices.configuration;
 
+import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.adapter.ArticleAdapter;
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.adapter.BrandAdapter;
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.adapter.CategoryAdapter;
+import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.mapper.IArticleEntityMapper;
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.mapper.IBrandEntityMapper;
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.mapper.ICategoryEntityMapper;
+import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.repository.IArticleRepository;
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.repository.IBrandRepository;
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.repository.ICategoryRepository;
+import com.demo.emazon_stack_microservices.domain.api.IArticleServicePort;
 import com.demo.emazon_stack_microservices.domain.api.IBrandServicePort;
 import com.demo.emazon_stack_microservices.domain.api.ICategoryServicePort;
+import com.demo.emazon_stack_microservices.domain.api.usecase.ArticleUseCase;
 import com.demo.emazon_stack_microservices.domain.api.usecase.BrandUseCase;
 import com.demo.emazon_stack_microservices.domain.api.usecase.CategoryUseCase;
+import com.demo.emazon_stack_microservices.domain.spi.IArticlePersistencePort;
 import com.demo.emazon_stack_microservices.domain.spi.IBrandPersistencePort;
 import com.demo.emazon_stack_microservices.domain.spi.ICategoryPersistencePort;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +31,8 @@ public class BeanConfiguration {
     private final IBrandRepository brandRepository;
     private final IBrandEntityMapper brandyEntityMapper;
 
+    private final IArticleRepository articleRepository;
+    private final IArticleEntityMapper articleEntityMapper;
 
     @Bean
     public ICategoryPersistencePort categoryPersistencePort() {
@@ -33,6 +41,15 @@ public class BeanConfiguration {
     @Bean
     public ICategoryServicePort categoryServicePort() {
         return new CategoryUseCase(categoryPersistencePort());
+    }
+
+    @Bean
+    public IArticleServicePort articleServicePort(){
+        return new ArticleUseCase(articlePersistencePort());
+    }
+    @Bean
+    public IArticlePersistencePort articlePersistencePort(){
+        return new ArticleAdapter( articleRepository, categoryRepository, articleEntityMapper, categoryEntityMapper );
     }
 
 
