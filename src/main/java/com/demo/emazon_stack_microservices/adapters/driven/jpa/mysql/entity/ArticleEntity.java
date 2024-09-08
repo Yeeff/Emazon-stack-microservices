@@ -37,4 +37,8 @@ public class ArticleEntity {
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private Set<CategoryEntity> categories = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "id_brand")
+    private BrandEntity brand;
 }

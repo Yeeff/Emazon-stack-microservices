@@ -29,7 +29,7 @@ public class BeanConfiguration {
     private final ICategoryEntityMapper categoryEntityMapper;
 
     private final IBrandRepository brandRepository;
-    private final IBrandEntityMapper brandyEntityMapper;
+    private final IBrandEntityMapper brandEntityMapper;
 
     private final IArticleRepository articleRepository;
     private final IArticleEntityMapper articleEntityMapper;
@@ -49,13 +49,19 @@ public class BeanConfiguration {
     }
     @Bean
     public IArticlePersistencePort articlePersistencePort(){
-        return new ArticleAdapter( articleRepository, categoryRepository, articleEntityMapper, categoryEntityMapper );
+        return new ArticleAdapter(
+                articleRepository,
+                categoryRepository,
+                brandRepository,
+                articleEntityMapper,
+                categoryEntityMapper,
+                brandEntityMapper);
     }
 
 
     @Bean
     public IBrandPersistencePort brandPersistencePort() {
-        return new BrandAdapter(brandRepository, brandyEntityMapper);
+        return new BrandAdapter(brandRepository, brandEntityMapper);
     }
     @Bean
     public IBrandServicePort brandServicePort() {

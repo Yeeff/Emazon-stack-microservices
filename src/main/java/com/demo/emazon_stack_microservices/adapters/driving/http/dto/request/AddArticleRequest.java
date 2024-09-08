@@ -16,4 +16,5 @@ public class AddArticleRequest {
     private final BigDecimal price;
     private final Long quantity;
     private List<Long> categories;
+    private final Long brandId;
 }

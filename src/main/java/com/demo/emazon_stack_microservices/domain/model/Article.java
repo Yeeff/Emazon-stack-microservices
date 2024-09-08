@@ -17,9 +17,11 @@ public class Article {
     private final String description;
     private final BigDecimal price;
     private final Long quantity;
+
+    private Brand brand;
     private List<Category> categories;
 
-    public Article(long id, String name, String description, BigDecimal price, Long quantity, List<Category> categories) {
+    public Article(long id, String name, String description, BigDecimal price, Long quantity, List<Category> categories, Brand brand) {
         if (name.trim().isEmpty()) {
             throw new EmptyFieldException(DomainConstants.Field.NAME.toString());
         }
@@ -34,6 +36,9 @@ public class Article {
         }
         if (categories == null) {
             throw new EmptyFieldException(DomainConstants.Field.CATEGORIES.toString());
+        }
+        if (brand == null) {
+            throw new EmptyFieldException(DomainConstants.Field.BRAND.toString());
         }
 
         if (price.compareTo(BigDecimal.ZERO) < 0) {
@@ -56,6 +61,7 @@ public class Article {
         this.price = requireNonNull(price, DomainConstants.FIELD_PRICE_NULL_MESSAGE);
         this.quantity = requireNonNull(quantity, DomainConstants.FIELD_QUANTITY_NULL_MESSAGE);
         this.categories = requireNonNull(categories, DomainConstants.FIELD_CATEGORIES_NULL_MESSAGE);
+        this.brand = requireNonNull(brand, DomainConstants.FIELD_BRAND_NULL_MESSAGE);
     }
 
     public Long getId() {
@@ -84,5 +90,11 @@ public class Article {
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
+    public Brand getBrand() {
+        return brand;
+    }
 
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
 }
