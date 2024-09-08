@@ -1,6 +1,6 @@
 package com.demo.emazon_stack_microservices.adapters.driving.http.dto.response;
 
-import com.demo.emazon_stack_microservices.domain.model.Category;
+import com.demo.emazon_stack_microservices.domain.model.Brand;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -15,5 +15,6 @@ public class ArticleResponse {
     private final String description;
     private final BigDecimal price;
     private final Long quantity;
-    private List<Category> categories;
+    private final Brand brand;
+    private List<CategoryResponse> categories;
 }

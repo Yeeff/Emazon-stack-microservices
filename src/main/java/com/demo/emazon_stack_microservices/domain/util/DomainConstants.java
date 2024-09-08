@@ -1,6 +1,7 @@
 package com.demo.emazon_stack_microservices.domain.util;
 
 public final class DomainConstants {
+
     private DomainConstants() {
         throw new IllegalStateException("Utility class");
     }
@@ -10,7 +11,8 @@ public final class DomainConstants {
         DESCRIPTION,
         PRICE,
         QUANTITY,
-        CATEGORIES
+        CATEGORIES,
+        BRAND
     }
 
     public static final int MAX_CATEGORY_NAME_LENGTH = 50;
@@ -28,6 +30,7 @@ public final class DomainConstants {
     public static final String FIELD_QUANTITY_NULL_MESSAGE = "Field 'quantity' cannot be null";
     public static final String FIELD_PRICE_NULL_MESSAGE = "Field 'price' cannot be null";
     public static final String FIELD_CATEGORIES_NULL_MESSAGE = "Field 'categories' cannot be null";
+    public static final String FIELD_BRAND_NULL_MESSAGE = "Field 'Brand' cannot be null";
     public static final String MIM_CATEGORIES_NOT_MET_MESSAGE = "Article must have at least "+ MIN_CATEGORIES_BY_ARTICLE +" category";
     public static final String MAX_CATEGORIES_EXCEEDED_MESSAGE = "Article cannot have more than "+MAX_CATEGORIES_BY_ARTICLE+" categories";
 }

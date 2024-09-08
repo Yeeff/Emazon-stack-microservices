@@ -2,13 +2,14 @@ package com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.adapter;
 
 
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.entity.ArticleEntity;
+import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.entity.BrandEntity;
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.entity.CategoryEntity;
-import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.exception.ArticleAlreadyExistsException;
-import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.exception.CategoryNotFoundException;
-import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.exception.NoDataFoundException;
+import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.exception.*;
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.mapper.IArticleEntityMapper;
+import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.mapper.IBrandEntityMapper;
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.mapper.ICategoryEntityMapper;
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.repository.IArticleRepository;
+import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.repository.IBrandRepository;
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.repository.ICategoryRepository;
 import com.demo.emazon_stack_microservices.adapters.driven.jpa.mysql.utils.PageableUtils;
 import com.demo.emazon_stack_microservices.domain.model.Article;
@@ -25,8 +26,11 @@ import java.util.stream.Collectors;
 public class ArticleAdapter implements IArticlePersistencePort {
     private final IArticleRepository articleRepository;
     private final ICategoryRepository categoryRepository;
+    private final IBrandRepository brandRepository;
+
     private final IArticleEntityMapper articleEntityMapper;
     private final ICategoryEntityMapper categoryEntityMapper;
+    private final IBrandEntityMapper brandEntityMapper;
 
     @Override
     public void addArticle(Article article) {
@@ -36,6 +40,10 @@ public class ArticleAdapter implements IArticlePersistencePort {
 
         populateCategories(article);
 
+        BrandEntity brand = brandRepository.findById(article.getBrand().getId())
+                .orElseThrow();
+        article.setBrand(brandEntityMapper.toModel(brand));
+
         articleRepository.save(articleEntityMapper.toEntity(article));
 
     }
@@ -43,6 +51,54 @@ public class ArticleAdapter implements IArticlePersistencePort {
     @Override
     public Boolean existsByName(String name) {
         return articleRepository.existsByName(name);
+    }
+
+    @Override
+    public List<Article> getAllArticles(int page, int size, String sortDirection) {
+
+        PageableUtils.validatePageableParameters(size,page,sortDirection);
+
+        Pageable pageable = PageableUtils.getPageable(size,page,sortDirection);
+
+        List<ArticleEntity> articles = articleRepository.findAll(pageable).getContent();
+        if (articles.isEmpty()) {
+            throw new NoDataFoundException();
+        }
+
+        return articleEntityMapper.toModelList(articles);
+    }
+
+    @Override
+    public Article getArticle(String articleName) {
+        ArticleEntity article = articleRepository.findByNameContaining(articleName).orElseThrow(ElementNotFoundException::new);
+        return articleEntityMapper.toModel(article);    }
+
+    @Override
+    public List<Article> getAllArticlesByCategory(Integer page, Integer size, String sortDirection, String categoryName) {
+        PageableUtils.validatePageableParameters(size,page,sortDirection);
+
+        Pageable pageable = PageableUtils.getPageable(size,page,sortDirection);
+
+        List<ArticleEntity> articles = articleRepository.findAllByCategoryName(categoryName, pageable);
+        if (articles.isEmpty()) {
+            throw new NoDataFoundException();
+        }
+
+        return articleEntityMapper.toModelList(articles);
+    }
+
+    @Override
+    public List<Article> getAllArticlesByBrand(Integer page, Integer size, String sortDirection, String brandName) {
+        PageableUtils.validatePageableParameters(size,page,sortDirection);
+
+        Pageable pageable = PageableUtils.getPageable(size,page,sortDirection);
+
+        List<ArticleEntity> articles = articleRepository.findAllByBrandNameContaining(brandName, pageable).getContent();
+        if (articles.isEmpty()) {
+            throw new NoDataFoundException();
+        }
+
+        return articleEntityMapper.toModelList(articles);
     }
 
     private Article populateCategories(Article article) {

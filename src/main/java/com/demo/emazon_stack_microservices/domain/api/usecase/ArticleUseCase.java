@@ -32,4 +32,25 @@ public class ArticleUseCase implements IArticleServicePort {
         articlePersistencePort.addArticle(article);
     }
 
+    @Override
+    public List<Article> getAllArticles(int page, int size, String sortDirection) {
+        return articlePersistencePort.getAllArticles(page,size,sortDirection);
+    }
+
+    @Override
+    public Article getArticle(String articleName) {
+        return articlePersistencePort.getArticle(articleName);
+    }
+
+    @Override
+    public List<Article> getAllArticlesByCategory(Integer page, Integer size, String sortDirection, String categoryName) {
+        return articlePersistencePort.getAllArticlesByCategory(page,size, sortDirection,categoryName);
+    }
+
+    @Override
+    public List<Article> getAllArticlesByBrand(Integer page, Integer size, String sortDirection, String brandName) {
+        return articlePersistencePort.getAllArticlesByBrand(page,size,  sortDirection, brandName);
+    }
+
+
 }

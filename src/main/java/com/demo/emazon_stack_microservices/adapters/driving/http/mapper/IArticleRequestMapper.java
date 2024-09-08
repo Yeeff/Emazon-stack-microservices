@@ -14,6 +14,10 @@ import java.util.List;
 public interface IArticleRequestMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(source = "categories", target = "categories", qualifiedByName = "mapCategoryIds")
+
+    @Mapping(source = "brandId", target = "brand.id")
+    @Mapping(target = "brand.name", constant = "name")
+    @Mapping(target = "brand.description", constant = "description")
     Article addRequestToArticle(AddArticleRequest addArticleRequest);
 
     @Named(value = "mapCategoryIds")
